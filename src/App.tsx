@@ -23,7 +23,7 @@ function App() {
 
   //States para abrir e fechar o modal que edita um funcionário
   const [openModalEdit, setOpenModalEdit] = useState(false)
-  const handleOpenEdit = () => setOpenModalEdit(true)
+  
   const handleCloseEdit = () => setOpenModalEdit(false)
 
   //States para abrir e fechar o modal que adiciona um novo funcionário
