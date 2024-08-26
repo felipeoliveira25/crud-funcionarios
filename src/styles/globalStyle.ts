@@ -10,10 +10,11 @@ const GlobalStyle = createGlobalStyle`
     body{
         width: 100vw;
         min-height: 100vh;
+        overflow-x: hidden;
         background-color: #bdbdbd;
         display: flex;
         justify-content: center;
-        align-items: center;
+        font-family: 'Quicksand', sans-serif;
     }
 `
 

@@ -1,8 +1,17 @@
 import styled from "styled-components";
 
+
+
 export const Container = styled.div`
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
     
+`
+
+export const TitleContainer = styled.h1`
+     font-family: 'Quicksand', sans-serif;
+     margin: 3rem 0;
 `
 
 export const Form = styled.form`
@@ -10,7 +19,12 @@ export const Form = styled.form`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+`
+
+export const TitleForm = styled.h3`
+    margin-bottom: 1.5rem;
+    font-family: 'Quicksand', sans-serif;
 `
 
 export const DivInput = styled.div`
@@ -24,12 +38,7 @@ export const DivInput = styled.div`
     }
 `
 
-export const ButtonForm = styled.button`
-    padding: 0.7rem;
-    border: none;
-    border-radius: 5px;
-    margin-top: 1rem;
-`
+
 
 export const ListaFuncionarios = styled.div`
     display: flex;
@@ -59,3 +68,4 @@ export const ItemFuncionario = styled.td`
 
 border: 1px solid black;
 `
+
