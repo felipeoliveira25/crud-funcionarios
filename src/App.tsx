@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IFuncionario } from "./interfaces/IFuncionario"
 import {  Container, DivInput, Form, TitleContainer, TitleForm } from "./style";
 import GlobalStyle from "./styles/globalStyle";
@@ -11,12 +11,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Fab from '@mui/material/Fab';
-import AddIcon from '@mui/icons-material/Add';
+import { ButtonAddFunc } from "./components/ButtonAddFunc";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Modal } from "@mui/material";
-import { v4 as uuidv4} from 'uuid'
+
+import axios from "axios";
 
 
 function App() {
@@ -39,22 +39,41 @@ function App() {
   const [emailFunc, setEmailFunc] = useState('')
 
   //State para gerenciar o funcionário que está sendo editado
-  const [funcionarioEditando, setFuncionarioEditando] = useState<string | null>(null);
+  
+
+  useEffect( () => {
+    const buscarFuncionarios = async () => {
+      try{
+        const res = await axios.get('http://localhost:3001/funcionarios')
+        setFuncionarios(res.data)
+      } catch (e){
+        console.log(e)
+      }
+    }
+    buscarFuncionarios()
+  }, [])
+
+  const adicionarFuncionario = async(funcioario: IFuncionario) => {
+    await axios.post('http://localhost:3001/funcionarios', {
+      nome: funcioario.nome,
+      idade: funcioario.idade,
+      cargo: funcioario.cargo,
+      email: funcioario.email
+    })
+  }
 
 
   //função para criar adicionar um novo funcionário à lista
   const criarFuncionario = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();//prevenir o evento padrão de uma SPA, que ao enviar um formulário recarrega a página
     const funcionarioNovo: IFuncionario = { //cria um funcionário novo com os os valores vindo dos input e uma criação de id automática
-        id: uuidv4(),
         nome: nomeFunc,
         idade: idadeFunc,
         cargo: cargoFunc,
         email: emailFunc
       }
 
-      setFuncionarios([...funcionarios, funcionarioNovo]) //atualiza o array de funcionário, dizendo para manter o funcionários já existentes e adicionar o novo
-
+      adicionarFuncionario(funcionarioNovo)
        setNomeFunc('')
        setIdadeFunc(0)
        setCargoFunc('')
@@ -63,34 +82,9 @@ function App() {
     
   }
 
-  const removerFuncionario = (id: string) => { //função para remover um funcionário pelo id
-    setFuncionarios(funcionarios.filter(func => func.id !== id)) //cria um array novo filtrando todos os ids que sejam DIFERENTES do id passado
-  }
+  
 
-  const editarFuncionario = (id: string) => { //função para editar um funcionário pelo id
-    const funcionarioSelecionado = funcionarios.find(func => func.id === id ) //retorna o funcionário que corresponde ao id passado
-    if (funcionarioSelecionado) { // se o funcionário de fato existe...
-      setFuncionarioEditando(id); // define o id do funcionário que está sendo editado
-      setNomeFunc(funcionarioSelecionado.nome); //e altera todos os campos para estarem com os mesmos valores que o funcionário do id correspondente
-      setIdadeFunc(funcionarioSelecionado.idade);
-      setCargoFunc(funcionarioSelecionado.cargo);
-      setEmailFunc(funcionarioSelecionado.email);
-      setOpenModalEdit(true); //abre o modal de editar funcionários
-  }
-}
-const salvarEdicao = (e: React.FormEvent<HTMLFormElement>) => { //função para salvar o usuário que foi editado
-  e.preventDefault(); //prevenir o evento padrão da página
-  if (funcionarioEditando) { // se de fato existe um funcionário sendo editado...
-    // atualiza o funcionário no array
-    setFuncionarios(funcionarios.map((func) => //1) vai fazer uma varredura de todos os funcionários presentes no array
-      func.id === funcionarioEditando //2) caso o id do funcionário que está sendo editado seja igual ao id que aparecer dos funcionários da lista
-        ? { ...func, nome: nomeFunc, idade: idadeFunc, cargo: cargoFunc, email: emailFunc } //3) vai conseguir editar os itens, caso seja true
-        : func // 4) se for false, apenas ficará da mesma forma 
-    ));
-    setFuncionarioEditando(null); // limpa o id do funcionário sendo editado
-    handleCloseEdit(); // fecha o modal de edição
-  }
-};
+ 
 
   
   return (
@@ -180,7 +174,7 @@ const salvarEdicao = (e: React.FormEvent<HTMLFormElement>) => { //função para 
              alignItems: 'center'
            }}>
             <TitleForm>Editar Funcionário</TitleForm>
-            <Form onSubmit={salvarEdicao}>
+            <Form >
               <DivInput>
                   <TextField 
                     label = "Nome"
@@ -255,13 +249,13 @@ const salvarEdicao = (e: React.FormEvent<HTMLFormElement>) => { //função para 
                         }}>
                         <DeleteOutlineOutlinedIcon 
                           color="error" 
-                          onClick={() => removerFuncionario(func.id)}
+                          
                           sx={{
                             cursor: 'pointer'
                           }}/>
                         <EditOutlinedIcon 
                           color="primary"
-                          onClick={() => editarFuncionario(func.id)}
+                         
                           sx={{
                             cursor: "pointer"
                           }}/>
@@ -273,17 +267,7 @@ const salvarEdicao = (e: React.FormEvent<HTMLFormElement>) => { //função para 
           </Table>
          
         </TableContainer>
-        <Fab 
-          color="primary" 
-          size="medium"
-          onClick={handleOpen}
-          sx={{
-            position: 'fixed',
-            top: '32rem',
-            right: '2rem'
-          }}>
-            <AddIcon/>
-        </Fab>
+        <ButtonAddFunc onClick={handleOpen}/>
     </Container>
       
     </>

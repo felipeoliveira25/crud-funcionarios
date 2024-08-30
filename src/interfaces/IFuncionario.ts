@@ -1,5 +1,5 @@
 export interface IFuncionario {
-    id: string
+    id?: string
     nome: string
     idade: number
     cargo: string
