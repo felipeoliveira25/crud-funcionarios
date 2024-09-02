@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
         width: 100vw;
         min-height: 100vh;
         overflow-x: hidden;
-        background-color: #bdbdbd;
+        background-color: #f5f5f5;
         display: flex;
         justify-content: center;
         font-family: 'Quicksand', sans-serif;
