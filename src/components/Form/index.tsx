@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useEmployees } from "../../hooks/useEmployees";
 import { IEmployee } from "../../interfaces/IEmployee";
-import { ContainerForm } from "./style";
+import { ContainerForm, TitleForm } from "./style";
 
 export function Form(){
     const { addEmployee, editEmployee } = useEmployees();
@@ -21,6 +21,7 @@ export function Form(){
 
     return(
         <ContainerForm onSubmit={handleSubmit}>
+            <TitleForm variant="body1">Adicionar Funcionário</TitleForm>
             <input 
                 type="text"
                 placeholder="Nome"

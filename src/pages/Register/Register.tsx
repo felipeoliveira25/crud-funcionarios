@@ -11,6 +11,7 @@ export default function Register(){
             <ButtonGoBack onClick={() => navigate(-1)}> 
                 {'< Voltar'}  
             </ButtonGoBack>
+            
             <Form/>
         </Container>
     )
