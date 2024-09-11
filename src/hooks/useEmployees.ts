@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { employeeService } from "../services/funcionarioService";
+import { employeeService } from "../services/employeeService";
 import { IEmployee } from "../interfaces/IEmployee";
 
 export const useEmployees = () => {

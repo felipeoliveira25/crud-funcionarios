@@ -88,31 +88,31 @@ export const TableCellIcons = styled(StyledTableCellBody)`
 
 export const StyledTableRow = styled(TableRow)`
   && {
-    /* Estilos padrão */
+    
     background-color: #fff;
     height: 10px;
 
-    /* Media query para telas maiores que 'sm' (600px) */
+    
     @media (min-width: ${breakpoints.sm}) {
       background-color: #f9f9f9;
     }
 
-    /* Media query para telas maiores que 'md' (900px) */
+    
     @media (min-width: ${breakpoints.md}) {
       background-color: #f2f2f2;
     }
 
-    /* Media query para telas maiores que 'lg' (1200px) */
+    
     @media (min-width: ${breakpoints.lg}) {
       background-color: #e9e9e9;
     }
 
-    /* Media query para telas maiores que 'xl' (1536px) */
+   
     @media (min-width: ${breakpoints.xl}) {
       background-color: #e0e0e0;
     }
 
-    /* Ajustando o padding das células da linha */
+   
     & > ${StyledTableCellBody}, & > ${StyledTableCellHead} {
       padding: 4px;
 
